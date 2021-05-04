@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/stylesheetWall.css' %}">
+</head>
+<body>
+    <h1>{{thisUser.firstName}}'s coding wall</h1>
+    <a href="/logout" class="blueUl">logout</a>
+    <div>
+        <h4>Post a message</h4>
+        <form action="/message" method="POST">
+        {% csrf_token %}
+            <textarea name="textBoxMessage"cols="30" rows="2"></textarea>
+            <input type="submit" value="Post a message">
+            <input type="hidden" value='{{thisUser.id}}' name='userID'>
+        </form>
+    </div>
+    <div>
+        <ul>
+            {% for imessage in all_messages %}
+                <li>
+                    <h4>{{imessage.user.firstName}} {{imessage.user.lastName}} - {{imessage.created_at}}</h4>
+                    <p>{{imessage.message}}</p>
+                    <ul>
+                        {% for icomment in imessage.comments.all %}
+                            <li>
+                                <h4>{{icomment.user.firstName}} {{icomment.user.lastName}} - {{icomment.created_at}}</h4>
+                                <p>{{icomment.comment}}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% if messages %}
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <form action="/comment" method='POST'>
+                        {% csrf_token %}
+                        <textarea name="textBoxComment"cols="10" rows="2"></textarea>
+
+                        <input hidden type="text" name='messageID' value={{imessage.id}}
+                        >
+
+                        <input hidden type="text" name='userID' value={{thisUser.id}}>
+
+                        <input type="submit" value="Post a comment">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
