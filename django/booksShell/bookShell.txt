@@ -1,0 +1,63 @@
+>>> python manage.py makemigrations
+>>> python manage.py migrate
+>>> python manage.py shell
+>>> python manage.py booksShellApp.models import*
+
+>>> book1 = Books.objects.create(title='C Sharp')
+>>> book2 = Books.objects.create(title='Java')
+>>> book3 = Books.objects.create(title='Python')
+>>> book4 = Books.objects.create(title='PHP')
+>>> book5 = Books.objects.create(title='Ruby')
+
+>>> author1 = Author.objects.create(name='Jane Austen')
+>>> author2 = Author.objects.create(name='Emily Dickinson')
+>>> author3 = Author.objects.create(name='Fyodor Dostoevsky')
+>>> author4 = Author.objects.create(name='William Shakespeare')
+>>> author5 = Author.objects.create(name='Lau Tzu')
+
+*make new text field on authors notes*
+>>> python manage.py makemigrations
+>>> python manage.py migrate
+>>> python manage.py shell
+>>> python manage.py booksShellApp.models import*
+
+>>> book1.title = 'C#'
+>>> book1.save()
+>>> author4.name='Bill Shakespeare'
+>>> author4.save()
+
+>>> author1.books.add(book1) #or i a do this -> author1.books.add(Books.objects.get(id=1))  or this -> author1.books.add(Books.objects.include('C sharp'))
+>>> author1.save()
+>>> author1.books.add(book2)
+>>> author1.save()
+
+>>> author2.books.add(book1)
+>>> author2.save()
+>>> author2.books.add(book2)
+>>> author2.save()
+>>> author2.books.add(book3)
+>>> author2.save()
+
+>>> author3.books.add(book1)
+>>> author3.save()
+>>> author3.books.add(book2)
+>>> author3.save()
+>>> author3.books.add(book3)
+>>> author3.save()
+>>> author3.books.add(book4)
+>>> author3.save()
+
+>>> author4.books.add(Books.objects.all())
+>>> author4.save()
+
+>>> book3.Authors.all()
+>>> book3.first().delete()
+>>> book3.save()
+
+>>> book2.authors.add(author5)
+
+>>> author3.books.all()
+>>> author3.books.all().values()
+
+>>> book5.authors.all()
+>>> book5.authors.all().values()
