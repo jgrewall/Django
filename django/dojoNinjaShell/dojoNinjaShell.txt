@@ -1,0 +1,80 @@
+(djangoEnv) C:\Users\jaski\Desktop\CodingDojo\Dojo_Assignments\Python\django\djangoOrm\dojoNinjaShell\dojoNinjaShellProject>python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dnsApp, sessions
+Running migrations:
+  Applying dnsApp.0004_auto_20210219_1258... OK
+  Applying dnsApp.0005_auto_20210219_1259... OK
+
+(djangoEnv) C:\Users\jaski\Desktop\CodingDojo\Dojo_Assignments\Python\django\djangoOrm\dojoNinjaShell\dojoNinjaShellProject>python manage.py shell
+Python 3.8.3 (tags/v3.8.3:6f8c832, May 13 2020, 22:20:19) [MSC v.1925 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> Dojo.objects.create(name='Michael', city='Scranton', state='Pennsylvania')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'Dojo' is not defined
+>>> from dnsApp.models import *
+>>> Dojo.objects.create(name='Michael', city='Scranton', state='Pennsylvania')
+<Dojo: Dojo object (1)>
+>>> Dojo.objects.create(name='Michael2', city='Scranton2', state='Pennsylvania2')
+<Dojo: Dojo object (2)>
+>>> Dojo.objects.create(name='Michae3', city='Scranton3', state='Pennsylvania3')
+<Dojo: Dojo object (3)>
+>>> Dojo.objects.all().values()
+<QuerySet [{'id': 1, 'name': 'Michael', 'city': 'Scranton', 'state': 'Pennsylvania', 'created_at': datetime.datetime(2021, 2, 19, 21, 6, 27, 229007, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 2, 19, 21, 6, 27, 229007, tzinfo=<UTC>)}, {'id': 2, 'name': 'Michael2', 'city': 'Scranton2', 'state': 'Pennsylvania2', 'created_at': datetime.datetime(2021, 2, 19, 21, 8, 52, 559909, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 2, 19, 21, 8, 52, 559909, tzinfo=<UTC>)}, {'id': 3, 'name': 'Michae3', 'city': 'Scranton3', 'state': 'Pennsylvania3', 'created_at': datetime.datetime(2021, 2, 19, 21, 9, 30, 640710, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 2, 19, 21, 9, 30, 640710, tzinfo=<UTC>)}]>
+>>> allobjects1= Dojo.objects.get(id=1)
+>>> allobjects1.delete()
+(1, {'dnsApp.Ninja': 0, 'dnsApp.Dojo': 1})
+>>> allobjects1= Dojo.objects.get(id=2)
+>>> allobjects1.delete()
+(1, {'dnsApp.Ninja': 0, 'dnsApp.Dojo': 1})
+>>> allobjects2= Dojo.objects.get(id=2)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\jaski\Desktop\CodingDojo\Dojo_Assignments\Python\djangoEnv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\jaski\Desktop\CodingDojo\Dojo_Assignments\Python\djangoEnv\lib\site-packages\django\db\models\query.py", line 406, in get
+    raise self.model.DoesNotExist(
+dnsApp.models.Dojo.DoesNotExist: Dojo matching query does not exist.
+>>> allobjects2= Dojo.objects.get(id=3)
+>>> allobjects2.delete()
+(1, {'dnsApp.Ninja': 0, 'dnsApp.Dojo': 1})
+>>>  Dojo.objects.all().values()
+  File "<console>", line 1
+    Dojo.objects.all().values()
+    ^
+IndentationError: unexpected indent
+>>> Dojo.objects.all().values()
+<QuerySet []>
+>>> q1=Dojo.objects.create(name='Michael4', city='Scranton4', state='Pennsylvania4')
+>>> q1.save()
+>>> q2=Dojo.objects.create(name='Michael5', city='Scranton5', state='Pennsylvania5')
+>>> q2.save()
+>>> q3=Dojo.objects.create(name='Michael6', city='Scranton6', state='Pennsylvania6')
+>>> q3.save()
+
+>>> qq11=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q1)			#dojo_id=Dojo.objects.get()
+>>> qq11.save()
+>>> qq12=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q1)
+>>> qq12.save()
+>>> qq13=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q1)
+>>> qq13.save()
+
+>>> qq21=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q2)
+>>> qq21.save()
+>>> qq22=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q2)
+>>> qq22.save()
+>>> qq23=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q2)
+>>> qq23.save()
+
+>>> qq31=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q3)
+>>> qq31.save()
+>>> qq32=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q3)
+>>> qq32.save()
+>>> qq33=Ninja.objects.create(firstname='q11',lastname='qq1', dojo_id=q3)
+>>> qq33.save()
+
+>>> print(q1.ninja.first().values())
+>>> print(q1.ninja.first().values())
+>>> Ninja.objects.last().dojo_id.name
+>>> newdojo = Dojo.objects.create(name='joe', city='seattle', state = 'wa')
